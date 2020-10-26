@@ -1,0 +1,32 @@
+version: "3.8"
+
+# TODO: added grafana, telegraf and kapacitor
+
+services:
+  influxdb:
+    image: influxdb
+    restart: unless-stopped
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb-volume:/var/lib/influxdb
+
+  chronograf:
+    image: chronograf
+    restart: unless-stopped
+    ports:
+      - 8888:8888
+    volumes:
+      - chronograf-volume:/var/lib/chronograf
+    environment:
+      - INFLUXDB_URL=http://influxdb:8086
+    depends_on:
+      - influxdb
+
+  telegraf:
+    image: telegraf
+    restart: unless-stopped
+
+volumes:
+  influxdb-volume:
+  chronograf-volume:
