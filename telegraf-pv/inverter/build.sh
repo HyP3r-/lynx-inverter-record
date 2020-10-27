@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
+# Build the different tools and libraries for the inverter
+# Copyright (C) 2020 Andreas Fendt (mail@andreas-fendt.de)
+# Permission to copy and modify is granted under the GNU LESSER GENERAL PUBLIC LICENSE Version 3
 
+# configure verbosity and exit immediately on error
 set -ex
 
-# install build tools
-DEBIAN_FRONTEND=noninteractive apt-get update && \
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential && \
-rm -rf /var/lib/apt/lists/*
+# variables
+current_directory="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-# build aurora
-cd /opt/inverter/aurora && \
-wget --no-verbose http://www.curtronics.com/Solar/ftp/aurora-1.9.4.tar.gz && \
-tar xzf aurora-1.9.4.tar.gz && \
-cd aurora-1.9.4 && \
-make && \
-make install
-rm -rf /opt/inverter/aurora/aurora-1.9.4.tar.gz /opt/inverter/aurora/aurora-1.9.4
+# build inverters
+declare -a inverters=("power-one_aurora")
+for inverter in "${inverters[@]}"; do
+  [ -f "$current_directory/$inverter/build.sh" ] && bash "$current_directory/$inverter/build.sh" || true
+done
