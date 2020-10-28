@@ -26,12 +26,15 @@ class PowerOneAurora:
         self.default_arguments_prefix = None
         self.default_arguments_suffix = None
 
-    def call_aurora(self, command):
+    def call_aurora(self, command, columnize=True):
         """
         Call the aurora tool and wait for response
         """
 
-        return subprocess.check_output(self.default_arguments_prefix + [command] + self.default_arguments_suffix,
+        return subprocess.check_output(self.default_arguments_prefix +
+                                       (["--columnize"] if columnize else []) +
+                                       [command] +
+                                       self.default_arguments_suffix,
                                        timeout=self.timeout).decode()
 
     def execute(self):
@@ -48,12 +51,12 @@ class PowerOneAurora:
 
         # default arguments
         self.timeout = args.timeout
-        self.default_arguments_prefix = [self.aurora_program, "--columnize", f"--retries={args.retries}",
+        self.default_arguments_prefix = [self.aurora_program, f"--retries={args.retries}",
                                          f"--address={args.address}"]
         self.default_arguments_suffix = [args.device]
 
         # execute targets
-        run_targets = [self.execute_energy]
+        run_targets = [self.execute_energy, self.execute_alarm]
         for run_target in run_targets:
             try:
                 run_target()
@@ -68,13 +71,20 @@ class PowerOneAurora:
         process energy
         """
 
-        try:
-            output = self.call_aurora("--get-energy").split()
-            if output[7] != "OK":
-                return
-            self.response["ac-total-energy"] = float(output[5])
-        except:
-            pass
+        output = self.call_aurora("--get-energy").split()
+        if output[7] != "OK":
+            return
+        self.response["ac-total-energy"] = float(output[5])
+
+    def execute_alarm(self):
+        """
+        process alarms
+        """
+
+        output = self.call_aurora("--last-alarms", columnize=False).split("\n")
+        alarms = list(filter(lambda s: str(s).startswith("Alarm"), output))
+        alarms = list(map(lambda s: str(s)[23:], alarms))
+        self.response.update({f"alarm-{index}": alarms[index] for index in range(4)})
 
     def output(self):
         """
