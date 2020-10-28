@@ -8,6 +8,6 @@ set -ex
 
 # install aurorapy
 DEBIAN_FRONTEND=noninteractive apt-get update &&
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3-pip python3-wheel &&
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3 python3-pip python3-wheel python3-setuptools &&
   pip3 install aurorapy &&
   rm -rf /var/lib/apt/lists/*
