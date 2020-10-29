@@ -1,5 +1,5 @@
-# PV-Log
-A simple logging system with InfluxDB, Telegraf and Grafana.
+# Lynx Inverter Record
+A simple application for recording and visualizing solar inverter data with InfluxDB, Telegraf, Grafana and Kapacitor.
 
 ## Supported Inverters
 

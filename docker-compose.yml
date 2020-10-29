@@ -24,7 +24,7 @@ services:
       - influxdb
 
   telegraf:
-    build: ./telegraf-pv
+    build: ./telegraf-lynx-inverter-record
     restart: unless-stopped
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
