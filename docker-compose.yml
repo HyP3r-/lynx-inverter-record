@@ -29,9 +29,20 @@ services:
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
     volumes:
-      - $PWD/telegraf-pv/inverter:/opt/inverter
-      - $PWD/telegraf-pv/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - $PWD/telegraf-lynx-inverter-record/inverter:/opt/inverter
+      - $PWD/telegraf-lynx-inverter-record/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - influxdb
+
+  grafana:
+    image: grafana/grafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-volume:/var/lib/grafana
 
 volumes:
   influxdb-volume:
   chronograf-volume:
+  grafana-volume:
