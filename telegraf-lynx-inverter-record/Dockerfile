@@ -4,4 +4,4 @@ COPY telegraf.conf /etc/telegraf/telegraf.conf
 
 COPY inverter /opt/inverter
 
-RUN /opt/build.sh
+RUN /opt/inverter/build.sh

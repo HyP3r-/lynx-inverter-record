@@ -24,8 +24,13 @@ services:
       - influxdb
 
   telegraf:
-    image: telegraf
+    build: ./telegraf-lynx-inverter-record
     restart: unless-stopped
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    volumes:
+      - $PWD/telegraf-pv/inverter:/opt/inverter
+      - $PWD/telegraf-pv/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 
 volumes:
   influxdb-volume:
