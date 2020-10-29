@@ -41,6 +41,8 @@ services:
       - 3000:3000
     volumes:
       - grafana-volume:/var/lib/grafana
+    depends_on:
+      - influxdb
 
 volumes:
   influxdb-volume:
