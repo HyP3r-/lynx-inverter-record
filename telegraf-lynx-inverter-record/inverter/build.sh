@@ -10,7 +10,7 @@ set -ex
 current_directory="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 # build inverters
-declare -a inverters=("power-one_aurora")
+declare -a inverters=("power-one_aurora" "kostal_piko")
 for inverter in "${inverters[@]}"; do
   [ -f "$current_directory/$inverter/build.sh" ] && bash "$current_directory/$inverter/build.sh" || true
 done

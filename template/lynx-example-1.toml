@@ -1,0 +1,6 @@
+[inverters]
+
+[inverters.inverter-1]
+model = "power-one_aurora"
+address = 2
+device = "/dev/ttyUSB0"

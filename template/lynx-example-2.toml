@@ -1,0 +1,9 @@
+[inverters]
+
+[inverters.inverter-1]
+model = "kostal_piko"
+hostname = "192.168.2.11"
+
+[inverters.inverter-2]
+model = "kostal_piko"
+hostname = "192.168.2.12"

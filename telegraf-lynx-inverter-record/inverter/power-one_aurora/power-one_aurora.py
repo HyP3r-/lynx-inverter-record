@@ -4,7 +4,6 @@ __author__ = "Andreas Fendt"
 __copyright__ = "Copyright 2020"
 __credits__ = ["Andreas Fendt"]
 __license__ = "LGPL v3"
-__version__ = "0.0.1"
 __maintainer__ = "Andreas Fendt"
 __email__ = "mail@andreas-fendt.de"
 __status__ = "Development"

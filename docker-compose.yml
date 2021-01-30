@@ -44,7 +44,17 @@ services:
     depends_on:
       - influxdb
 
+  kapacitor:
+    image: kapacitor
+    restart: unless-stopped
+    volumes:
+      - kapacitor:/var/lib/kapacitor
+      - $PWD/kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro
+    ports:
+      - 9092:9092
+
 volumes:
-  influxdb-volume:
   chronograf-volume:
   grafana-volume:
+  influxdb-volume:
+  kapacitor-volume:
